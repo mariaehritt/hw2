@@ -70,15 +70,56 @@
 # Use `Model.destroy_all` code.
 # TODO!
 
-Model.destroy_all
+Movie.destroy_all
+Person.destroy_all
+Role.destroy_all
 
 # Generate models and tables, according to the domain model
 # TODO!
 
-# rails generate model Movie
-# rails generate model Person
-# rails generate model Role
-# rails db:migrate
+rails generate model Movie
+class Movie < ApplicationRecord
+    def change
+        create_table :movies do |t|
+            t.string :id
+            t.string :title
+            t.string :year_released
+            t.string :rated
+            t.string :person_id
+            
+            t.timestamps
+        end
+    end
+end
+
+rails generate model Person
+class Person < ApplicationRecord
+    def change
+        create_table :people do |t|
+            t.string :id
+            t.string :name
+            
+            t.timestamps
+        end
+    end
+end
+
+rails generate model Role
+class Role < ApplicationRecord
+    def change
+        create_table :roles do |t|
+            t.string :id
+            t.string :movie_id
+            t.string :person_id
+            t.string :character_name
+            
+            t.timestamps
+        end
+    end
+end
+
+rails db:migrate
+
 
 # Insert data into your database that reflects the sample data shown above
 # Do not use hard-coded foreign key IDs.
