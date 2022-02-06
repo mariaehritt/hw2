@@ -239,6 +239,11 @@ puts ""
 # Query the movies data and loop through the results to display the movies output
 # TODO!
 
+for movie in movies
+    movie_details = "#{title} #{year_released} #{rated} #{people.name}"
+    puts movie_details
+end
+
 # Prints a header for the cast output
 puts ""
 puts "Top Cast"
@@ -247,3 +252,8 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie
 # TODO!
+
+for person in people
+    cast_details = "#{movies.title} #{people.name} #{roles.character_name}"
+puts cast_details
+end
