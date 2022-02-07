@@ -77,75 +77,9 @@ Role.destroy_all
 # Generate models and tables, according to the domain model
 # TODO!
 
-rails generate model Movie
-class Movie < ApplicationRecord
-    def change
-        create_table :movies do |t|
-            t.string :id
-            t.string :title
-            t.string :year_released
-            t.string :rated
-            t.string :person_id
-            
-            t.timestamps
-        end
-    end
-end
-
-rails generate model Person
-class Person < ApplicationRecord
-    def change
-        create_table :people do |t|
-            t.string :id
-            t.string :name
-            
-            t.timestamps
-        end
-    end
-end
-
-rails generate model Role
-class Role < ApplicationRecord
-    def change
-        create_table :roles do |t|
-            t.string :id
-            t.string :movie_id
-            t.string :person_id
-            t.string :character_name
-            
-            t.timestamps
-        end
-    end
-end
-
-rails db:migrate
-
-
 # Insert data into your database that reflects the sample data shown above
 # Do not use hard-coded foreign key IDs.
 # TODO!
-
-# movies table data insert
-movie1 = Movie.new
-movie1.title = "Batman Begins"
-movie1.year_released = 2005
-movie1.rated = "PG-13"
-movie1.person_id = 1
-movie1.save
-
-movie2 = Movie.new
-movie2.title = "The Dark Knight"
-movie2.year_released = 2008
-movie2.rated = "PG-13"
-movie2.person_id = 1
-movie2.save
-
-movie3 = Movie.new
-movie3.title = "The Dark Knight Rises"
-movie3.year_released = 2012
-movie3.rated = "PG-13"
-movie3.person_id = 1
-movie3.save
 
 # people table data insert
 person1 = Person.new
@@ -196,80 +130,104 @@ person12 = Person.new
 person12.name = "Anne Hathaway"
 person12.save
 
+# movies table data insert
+movie1 = Movie.new
+movie1.title = "Batman Begins"
+movie1.year_released = 2005
+movie1.rated = "PG-13"
+movie1.person_id = person1.id
+movie1.save
+
+movie2 = Movie.new
+movie2.title = "The Dark Knight"
+movie2.year_released = 2008
+movie2.rated = "PG-13"
+movie2.person_id = person1.id
+movie2.save
+
+movie3 = Movie.new
+movie3.title = "The Dark Knight Rises"
+movie3.year_released = 2012
+movie3.rated = "PG-13"
+movie3.person_id = person1.id
+movie3.save
+
+
+
 # roles table data insert
 role1 = Role.new
-role1.movie_id = 1
-role1.person_id = 2
+role1.movie_id = movie1.id
+role1.person_id = person2.id
 role1.character_name = "Bruce Wayne"
 
 role2 = Role.new
-role2.movie_id = 1
-role2.person_id = 3
+role2.movie_id = movie1.id
+role2.person_id = person3.id
 role2.character_name = "Alfred"
 
 role3 = Role.new
-role3.movie_id = 1
-role3.person_id = 4
+role3.movie_id = movie1.id
+role3.person_id = person4.id
 role3.character_name = "Ra's Al Ghul"
 
 role4 = Role.new
-role4.movie_id = 1
-role4.person_id = 5
+role4.movie_id = movie1.id
+role4.person_id = person5.id
 role4.character_name = "Rachel Dawes"
 
 role5 = Role.new
-role5.movie_id = 1
-role5.person_id = 6
+role5.movie_id = movie1.id
+role5.person_id = person6.id
 role5.character_name = "Commissioner Gordon"
 
 role6 = Role.new
-role6.movie_id = 2
-role6.person_id = 2
+role6.movie_id = movie2.id
+role6.person_id = person2.id
 role6.character_name = "Bruce Wayne"
 
 role7 = Role.new
-role7.movie_id = 2
-role7.person_id = 7
+role7.movie_id = movie2.id
+role7.person_id = person7.id
 role7.character_name = "Joker"
 
 role8 = Role.new
-role8.movie_id = 2
-role8.person_id = 8
+role8.movie_id = movie2.id
+role8.person_id = person8.id
 role8.character_name = "Harvey Dent"
 
 role9 = Role.new
-role9.movie_id = 2
-role9.person_id = 9
+role9.movie_id = movie2.id
+role9.person_id = person9.id
 role9.character_name = "Alfred"
 
 role10 = Role.new
-role10.movie_id = 2
-role10.person_id = 3
+role10.movie_id = movie2.id
+role10.person_id = person3.id
 role10.character_name = "Rachel Dawes"
 
 role11 = Role.new
-role11.movie_id = 3
-role11.person_id = 2
+role11.movie_id = movie3.id
+role11.person_id = person2.id
 role11.character_name = "Bruce Wayne"
 
 role12 = Role.new
-role12.movie_id = 3
-role12.person_id = 6
+role12.movie_id = movie3.id
+role12.person_id = person6.id
 role12.character_name = "Commissioner Gordon"
 
 role13 = Role.new
-role13.movie_id = 3
-role13.person_id = 10
+role13.movie_id = movie3.id
+role13.person_id = person10.id
 role13.character_name = "Bane"
 
 role14 = Role.new
-role14.movie_id = 3
-role14.person_id = 11
+role14.movie_id = movie3.id
+role14.person_id = person11.id
 role14.character_name = "John Blake"
 
 role15 = Role.new
-role15.movie_id = 3
-role15.person_id = 12
+role15.movie_id = movie3.id
+role15.person_id = person12.id
 role15.character_name = "Selina Kyle"
 
 # Prints a header for the movies output
@@ -280,8 +238,9 @@ puts ""
 # Query the movies data and loop through the results to display the movies output
 # TODO!
 
+movies = Movie.all
 for movie in movies
-    movie_details = "#{title} #{year_released} #{rated} #{people.name}"
+    movie_details = "#{movie.title} #{movie.year_released} #{movie.rated} #{movie.person.name}"
     puts movie_details
 end
 
@@ -294,7 +253,8 @@ puts ""
 # Query the cast data and loop through the results to display the cast output for each movie
 # TODO!
 
+people = Person.all
 for person in people
-    cast_details = "#{movies.title} #{people.name} #{roles.character_name}"
+    cast_details = "#{people.movies.title} #{people.name} #{people.roles.character_name}"
 puts cast_details
 end
